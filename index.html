@@ -5,9 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hogwarts students list</title>
     <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
   </head>
   <body>
-    Hogwarts
+    <header>
+      <section id="headerTextBox">
+        <h1>Hogwarts</h1>
+        <h2>Students list</h2>
+      </section>
+      <section id="headerCountBox">
+        <h2>Count</h2>
+        <hr />
+        <div class="studentCountList">
+          <ul>
+            <h3>Students</h3>
+            <li class="allStudentsCount">
+              <p>All</p>
+              <p>55</p>
+            </li>
+            <li class="enroledStudentsCount">
+              <p>Enroled</p>
+              <p>44</p>
+            </li>
+            <li class="ExpelledStudentsCount">
+              <p>Expelled</p>
+              <p>2</p>
+            </li>
+          </ul>
+          <ul>
+            <h3>Houses</h3>
+            <li class="slytherinHouseCount">
+              <p>Slytherin</p>
+              <p>10</p>
+            </li>
+            <li class="gryffindorHouseCount">
+              <p>Gryffindor</p>
+              <p>10</p>
+            </li>
+            <li class="ravenclawHouseCount">
+              <p>Ravenclaw</p>
+              <p>10</p>
+            </li>
+            <li class="hufflepuffHouseCount">
+              <p>Hufflepuff</p>
+              <p>10</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <div id="filterContainer">
+        Filter:
+        <select name="houseDropdown" id="houseDropdown">
+          <option disabled selected value>House</option>
+          <option value="slytherin">Slytherin</option>
+          <option value="gryffindor">Gryffindor</option>
+          <option value="ravenclaw">Ravenclaw</option>
+          <option value="hufflepuff">Hufflepuff</option>
+        </select>
+        <button class="filter" data-action="filter" data-filter="enrolled">Enrolled</button>
+        <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
+        <button class="filter" data-action="filter" data-filter="*">all</button>
+      </div>
+
+      <hr />
+
+      <table id="list">
+        <thead>
+          <tr id="sorting">
+            <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="LastName">Last Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+            <!-- <th data-action="sort" data-sort-direction="asc" data-sort="star">⬤</th> -->
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- template goes here -->
+        </tbody>
+      </table>
+
+      <template id="student">
+        <tr id="studentRow">
+          <td data-field="firstName">First Name</td>
+          <td data-field="lastName">Last Name</td>
+          <td data-field="middleName">Middle Name</td>
+          <td data-field="gender">Gender</td>
+          <td data-field="house">House</td>
+          <td data-field="prefect">⬤</td>
+        </tr>
+      </template>
+
+      <button id="myBtn">Open Modal</button>
+
+      <!-- The Modal -->
+      <div id="studentModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+       
+          <div id="modalTextBox">
+            <p>Student Full Name:</p>
+            <p data-field="fullName"></p>
+            <p>House:</p>
+            <p data-field="house"></p>
+            <p>Action:</p>
+            <button id="expellBtn">Expel</button>
+            <button id="makePrefectBtn" >Promote as prefect</button>
+            <button id="makeInquisitorBtn" >Make Inquisitor</button>
+          </div>
+          <img id="modalStudentImage">IMG
+        </div>
+        <span class="closeModal">&times;</span>
+        </div>
+      </div>
+    </main>
   </body>
 
   <script src="script.js"></script>
