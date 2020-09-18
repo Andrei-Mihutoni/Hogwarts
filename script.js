@@ -21,6 +21,8 @@ function start() {
   console.log("ready");
   loadJSON();
   modal();
+  sort();
+  getFilterOption();
 }
 
 function loadJSON() {
@@ -70,7 +72,10 @@ function prepareObject(jsonObject) {
 
   //Gender:
   student.gender = jsonObject.gender;
-  student.house = jsonObject.house.trim().charAt(0).toUpperCase() + jsonObject.house.substr(1).toLowerCase();
+  student.house = jsonObject.house.trim().charAt(0).toUpperCase() + jsonObject.house.trim().substr(1).toLowerCase();
+
+  // Image
+  student.imageFileName = getStudentImg(student.firstName, student.lastName);
 
   // allStudents.push(student);
   // });
@@ -145,10 +150,15 @@ function removeBtnEvents(modal) {
   makeInquisitorBtn.parentNode.replaceChild(makeInquisitorClone, makeInquisitorBtn);
 }
 
+function getStudentImg(firstName, lastName) {
+  return lastName.toLowerCase() + "_" + firstName.toLowerCase().charAt(0);
+}
+
 function showModal(student) {
   const studentModal = document.getElementById("studentModal");
   studentModal.querySelector("[data-field=fullName]").textContent = student.firstName + " " + student.middleName + " " + student.lastName;
   studentModal.querySelector("[data-field=house]").textContent = student.house;
+  studentModal.querySelector("#modalStudentImage").src = "/images/" + student.imageFileName + ".png";
 
   const expellBtn = studentModal.querySelector("#expellBtn");
   const makePrefectBtn = document.querySelector("#makePrefectBtn");
@@ -166,3 +176,142 @@ function showModal(student) {
     }
   });
 }
+
+function sort() {
+  const sortBtns = document.querySelectorAll("[data-action=sort]");
+  for (let i = 0; i < sortBtns.length; i++) {
+    sortBtns[i].addEventListener("click", function () {
+      sortStudents(this.dataset.sort);
+    });
+  }
+}
+
+function sortStudents(value) {
+  if (value == "firstName") {
+    allStudents.sort(sortByFirstName);
+  } else if (value == "lastName") {
+    allStudents.sort(sortByLastName);
+  } else if (value == "middleName") {
+    allStudents.sort(sortByMiddleName);
+  } else if (value == "gender") {
+    allStudents.sort(sortByGender);
+  } else if (value == "house") {
+    allStudents.sort(sortByHouse);
+  }
+  displayList(allStudents);
+}
+
+function sortByFirstName(a, b) {
+  if (a.firstName < b.firstName) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortByLastName(a, b) {
+  if (a.lastName < b.lastName) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortByMiddleName(a, b) {
+  if (a.middleName < b.middleName) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortByGender(a, b) {
+  if (a.gender < b.gender) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function sortByHouse(a, b) {
+  if (a.house < b.house) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
+function getFilterOption() {
+  document.querySelector("#houseDropdown").addEventListener("input", function () {
+    filterStudents(this.value);
+    console.log("input works");
+  });
+  document.querySelector("[data-action=filter]").addEventListener("click", function () {
+    displayList(allStudents);
+  });
+}
+
+function filterStudents(value) {
+  if (value == "expelled") {
+    displayList(expelledStudents);
+  } else if (value == "enrolled") {
+    displayList(allStudents);
+  } else if (value == "slytherin") {
+    const slytherinArray = allStudents.filter(isSlytherin);
+    displayList(slytherinArray);
+    // allStudents.filter(isSlytherin);
+  } else if (value == "gryffindor") {
+    const gryffindorArray = allStudents.filter(isGryffindor);
+    displayList(gryffindorArray);
+  } else if (value == "ravenclaw") {
+    const ravenclawArray = allStudents.filter(isRavenclaw);
+    displayList(ravenclawArray);
+  } else if (value == "hufflepuff") {
+    const hufflepuffArray = allStudents.filter(isHufflepuff);
+    displayList(hufflepuffArray);
+  } else {
+    displayList(allStudents);
+  }
+  // console.log(value);
+}
+
+function isSlytherin(student) {
+  if (student.house === "Slytherin") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isGryffindor(student) {
+  if (student.house === "Gryffindor") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isRavenclaw(student) {
+  if (student.house === "Ravenclaw") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isHufflepuff(student) {
+  if (student.house === "Hufflepuff") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function all(student) {
+  return true;
+}
+
+// const dogArray2 = animals.filter((animal) => animal.type === "dog");
+// // function isDog(animal) {
+// //   return animal.type === "dog";
+// }

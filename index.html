@@ -59,15 +59,20 @@
       <div id="filterContainer">
         Filter:
         <select name="houseDropdown" id="houseDropdown">
-          <option disabled selected value>House</option>
+           <option disabled selected value>-----</option>
+          <optgroup label="House">
           <option value="slytherin">Slytherin</option>
           <option value="gryffindor">Gryffindor</option>
           <option value="ravenclaw">Ravenclaw</option>
           <option value="hufflepuff">Hufflepuff</option>
+          </optgroup>
+          <optgroup label="Status">
+            <option value="enrolled">Enrolled</option>
+            <option value="expelled">Expelled</option>
+            </optgroup>
         </select>
-        <button class="filter" data-action="filter" data-filter="enrolled">Enrolled</button>
-        <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
-        <button class="filter" data-action="filter" data-filter="*">all</button>
+       
+        <button class="filter" data-action="filter" data-filter="*">All students</button>
       </div>
 
       <hr />
@@ -76,7 +81,7 @@
         <thead>
           <tr id="sorting">
             <th data-action="sort" data-sort-direction="asc" data-sort="firstName">First Name</th>
-            <th data-action="sort" data-sort-direction="asc" data-sort="LastName">Last Name</th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="lastName">Last Name</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="middleName">Middle Name</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
             <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
@@ -101,7 +106,7 @@
         </tr>
       </template>
 
-      <button id="myBtn">Open Modal</button>
+      <!-- <button id="myBtn">Open Modal</button> -->
 
       <!-- The Modal -->
       <div id="studentModal" class="modal">
@@ -118,7 +123,7 @@
             <button id="makePrefectBtn" >Promote as prefect</button>
             <button id="makeInquisitorBtn" >Make Inquisitor</button>
           </div>
-          <img id="modalStudentImage">IMG
+          <img id="modalStudentImage">
         </div>
         <span class="closeModal">&times;</span>
         </div>
