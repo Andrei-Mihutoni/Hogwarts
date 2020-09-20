@@ -21,34 +21,34 @@
             <h3>Students</h3>
             <li class="allStudentsCount">
               <p>All</p>
-              <p>55</p>
+              <p id="countAll">zzz</p>
             </li>
             <li class="enroledStudentsCount">
               <p>Enroled</p>
-              <p>44</p>
+              <p id="countEnroled">zzz</p>
             </li>
             <li class="ExpelledStudentsCount">
               <p>Expelled</p>
-              <p>2</p>
+              <p id="countExpelled">zz</p>
             </li>
           </ul>
           <ul>
             <h3>Houses</h3>
             <li class="slytherinHouseCount">
               <p>Slytherin</p>
-              <p>10</p>
+              <p id="slytherynCount">vvv</p>
             </li>
             <li class="gryffindorHouseCount">
               <p>Gryffindor</p>
-              <p>10</p>
+              <p id="gryffindorCount">vvv</p>
             </li>
             <li class="ravenclawHouseCount">
               <p>Ravenclaw</p>
-              <p>10</p>
+              <p id="ravenclawCount">vvv</p>
             </li>
             <li class="hufflepuffHouseCount">
               <p>Hufflepuff</p>
-              <p>10</p>
+              <p id="hufflepuffCount">vvv</p>
             </li>
           </ul>
         </div>
@@ -58,22 +58,35 @@
     <main>
       <div id="filterContainer">
         Filter:
-        <select name="houseDropdown" id="houseDropdown">
-           <option disabled selected value>-----</option>
-          <optgroup label="House">
+        <select class="houseDropdown" name="houseDropdown" id="houseDropdown">
+           <option disabled selected value>by House</option>
+          <!-- <optgroup label="House"> -->
           <option value="slytherin">Slytherin</option>
           <option value="gryffindor">Gryffindor</option>
           <option value="ravenclaw">Ravenclaw</option>
           <option value="hufflepuff">Hufflepuff</option>
           </optgroup>
-          <optgroup label="Status">
+        </select>
+        <select class="houseDropdown" name="houseDropdown" id="houseDropdownStatus">
+          <option disabled selected value>by status</option>
+          <!-- <optgroup label="Status"> -->
             <option value="enrolled">Enrolled</option>
             <option value="expelled">Expelled</option>
             </optgroup>
         </select>
        
-        <button class="filter" data-action="filter" data-filter="*">All students</button>
+    
+
+        <button class="filter" data-action="filter" data-filter="all">All students</button>
       </div>
+
+      <!-- <div class="searchWrapper">
+        <p class="searchText">Search item by keyword:</p>
+        <input oninput="searchByKeyword(this.value)" type="search" class="search searchByKeyword" placeholder="Keyword" onfocus="this.placeholder=''" onblur="this.placeholder='Keyword'" />
+        <button class="reset_all greenbutton" onClick="window.location.reload();">
+            &#10226;
+        </button>
+    </div> -->
 
       <hr />
 
@@ -112,18 +125,19 @@
       <div id="studentModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-       
           <div id="modalTextBox">
-            <p>Student Full Name:</p>
+            <h3>Student Full Name:</h3>
             <p data-field="fullName"></p>
-            <p>House:</p>
+            <h3>House:</h3>
             <p data-field="house"></p>
-            <p>Action:</p>
-            <button id="expellBtn">Expel</button>
-            <button id="makePrefectBtn" >Promote as prefect</button>
-            <button id="makeInquisitorBtn" >Make Inquisitor</button>
+           
           </div>
           <img id="modalStudentImage">
+          <div class="modalButtons">
+          <button id="expellBtn">Expel</button>
+          <button id="makePrefectBtn" >Promote as prefect</button>
+          <button id="makeInquisitorBtn" >Make Inquisitor</button>
+        </div>
         </div>
         <span class="closeModal">&times;</span>
         </div>

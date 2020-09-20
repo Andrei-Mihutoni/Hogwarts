@@ -23,6 +23,7 @@ function start() {
   modal();
   sort();
   getFilterOption();
+  countStatus();
 }
 
 function loadJSON() {
@@ -88,6 +89,7 @@ function displayList(students) {
 
   // build a new list
   students.forEach(displayStudent);
+  countStatus();
 }
 
 function displayStudent(student) {
@@ -135,7 +137,7 @@ function modal() {
 }
 
 function removeBtnEvents(modal) {
-  const modalContent = modal.querySelector("#modalTextBox");
+  const modalContent = modal.querySelector(".modalButtons");
 
   const expellBtn = modalContent.querySelector("#expellBtn"),
     expellBtnClone = expellBtn.cloneNode(true);
@@ -168,11 +170,12 @@ function showModal(student) {
     const studentIndex = allStudents.findIndex((searchedStudent) => searchedStudent == student);
     if (studentIndex > -1) {
       allStudents.splice(studentIndex, 1);
-      console.log(allStudents);
-      console.log(studentIndex);
+      // console.log(allStudents);
+      // console.log(studentIndex);
       expelledStudents.push(student);
       console.log(expelledStudents);
       displayList(allStudents);
+      // countStatus();
     }
   });
 }
@@ -181,24 +184,39 @@ function sort() {
   const sortBtns = document.querySelectorAll("[data-action=sort]");
   for (let i = 0; i < sortBtns.length; i++) {
     sortBtns[i].addEventListener("click", function () {
-      sortStudents(this.dataset.sort);
+      sortStudents(this.dataset.sort, allStudents);
+      if (document.querySelector("#houseDropdownStatus").value == "expelled") {
+        sortStudents(this.dataset.sort, expelledStudents);
+      }
+      if (document.querySelector("#houseDropdown").value == "slytherin") {
+        sortStudents(this.dataset.sort, allStudents.filter(isSlytherin));
+      }
+      if (document.querySelector("#houseDropdown").value == "gryffindor") {
+        sortStudents(this.dataset.sort, allStudents.filter(isGryffindor));
+      }
+      if (document.querySelector("#houseDropdown").value == "ravenclaw") {
+        sortStudents(this.dataset.sort, allStudents.filter(isRavenclaw));
+      }
+      if (document.querySelector("#houseDropdown").value == "hufflepuff") {
+        sortStudents(this.dataset.sort, allStudents.filter(isHufflepuff));
+      }
     });
   }
 }
 
-function sortStudents(value) {
+function sortStudents(value, students) {
   if (value == "firstName") {
-    allStudents.sort(sortByFirstName);
+    students.sort(sortByFirstName);
   } else if (value == "lastName") {
-    allStudents.sort(sortByLastName);
+    students.sort(sortByLastName);
   } else if (value == "middleName") {
-    allStudents.sort(sortByMiddleName);
+    students.sort(sortByMiddleName);
   } else if (value == "gender") {
-    allStudents.sort(sortByGender);
+    students.sort(sortByGender);
   } else if (value == "house") {
-    allStudents.sort(sortByHouse);
+    students.sort(sortByHouse);
   }
-  displayList(allStudents);
+  displayList(students);
 }
 
 function sortByFirstName(a, b) {
@@ -242,7 +260,11 @@ function sortByHouse(a, b) {
 }
 
 function getFilterOption() {
-  document.querySelector("#houseDropdown").addEventListener("input", function () {
+  document.querySelector(".houseDropdown").addEventListener("input", function () {
+    filterStudents(this.value);
+    console.log("input works");
+  });
+  document.querySelector("#houseDropdownStatus").addEventListener("input", function () {
     filterStudents(this.value);
     console.log("input works");
   });
@@ -311,7 +333,17 @@ function all(student) {
   return true;
 }
 
-// const dogArray2 = animals.filter((animal) => animal.type === "dog");
-// // function isDog(animal) {
-// //   return animal.type === "dog";
-// }
+function countStatus() {
+  // console.log(allStudents.length);
+  // console.log(expelledStudents.length);
+
+  document.querySelector("#countAll").textContent = allStudents.length + expelledStudents.length;
+  document.querySelector("#countEnroled").textContent = allStudents.length;
+  document.querySelector("#countExpelled").textContent = expelledStudents.length;
+  document.querySelector("#countExpelled").textContent = expelledStudents.length;
+
+  document.querySelector("#slytherynCount").textContent = allStudents.filter(isSlytherin).length;
+  document.querySelector("#gryffindorCount").textContent = allStudents.filter(isGryffindor).length;
+  document.querySelector("#ravenclawCount").textContent = allStudents.filter(isRavenclaw).length;
+  document.querySelector("#hufflepuffCount").textContent = allStudents.filter(isHufflepuff).length;
+}
